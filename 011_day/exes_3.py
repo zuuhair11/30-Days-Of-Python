@@ -50,12 +50,53 @@ print(check_all_same_type([1, '2', 3])) # False
 
 
 # 4- Write a function which check if provided variable is a valid python variable
+import string
+
+def is_valid_variable(v: str) -> bool:
+	legal = string.ascii_letters + '_'
+	illegal = string.punctuation.replace('_', '')
+
+	if len(str(v)) > 0:
+		if v[0] in legal:
+			for char in v:
+				if char in illegal:
+					return False
+			return True
+		else:
+			return False
+	else:
+		return False
+
+print('my_variable:', is_valid_variable("my_variable"))  # True
+print('1variable:', is_valid_variable("1variable"))  # False
+print('var$iable:', is_valid_variable("var$iable"))  # False
+print('"":', is_valid_variable(""))  # False
 
 
 # 5- Go to the data folder and access the countries-data.py file.
 # 5.1- Create a function called the most_spoken_languages in the world. 
 # It should return 10 or 20 most spoken languages in the world in descending order
+import countries
+
+def most_spoken_languages(countries: list) -> list:
+	spoken_languages = {}
+	for country in countries:
+		for language in country['languages']:
+			if language not in spoken_languages:
+				spoken_languages[language] = 0
+
+			spoken_languages[language] += 1
+
+	sorted_laguages = sorted(spoken_languages.items(), key=lambda item: item[1], reverse=True)
+	return dict(sorted_laguages[:10])
+
+print(most_spoken_languages(countries.countries))
 
 
 # 5.2- Create a function called the most_populated_countries. 
 # It should return 10 or 20 most populated countries in descending order.
+def most_populated_countries(countries: list) -> list:
+	return sorted(countries, key=lambda country: country['population'], reverse=True)[:10]
+
+sorted_countries = most_populated_countries(countries.countries)
+print(sorted_countries)
