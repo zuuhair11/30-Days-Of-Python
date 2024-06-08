@@ -27,17 +27,25 @@ print(len(lngs)) # 112
 
 
 # 3.2- Find the ten most spoken languages from the data
-import pprint
+def most_spoken_languages(countries: list) -> dict:
+	most_spoken_languages = {}
 
-most_spoken_languages = {}
-for country in countries_data:
-	for language in country['languages']:
-		if language not in most_spoken_languages:
-			most_spoken_languages[language] = 0
+	for country in countries_data:
+		for language in country['languages']:
+			if language not in most_spoken_languages:
+				most_spoken_languages[language] = 0
 
-		most_spoken_languages[language] += 1
+			most_spoken_languages[language] += 1
 
-pprint.pp(most_spoken_languages)
+	return dict(sorted(most_spoken_languages.items(), key=lambda language: language[1], reverse=True))
+
+sorted_languages = most_spoken_languages(countries_data)
+print(sorted_languages)
 
 
 # 3.3- Find the 10 most populated countries in the world
+def most_populated_countries(countries: list) -> list:
+	return sorted(countries, key=lambda country: country['population'], reverse=True)
+
+sorted_countries = most_populated_countries(countries_data)
+print(sorted_countries)
